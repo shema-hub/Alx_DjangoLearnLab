@@ -1,13 +1,13 @@
 # LibraryProject
 
-Welcome to the LibraryProject! This project is a simple Django application designed to manage a library system.
+Welcome to the LibraryProject! This project is a simple Django application for managing a library system.
 
 ## Features
 
 - Add, update, and delete books
 - Manage library members
-- Track borrowed and returned books
-- Search for books and members
+- Track borrowed books and due dates
+- Search for books by title, author, or genre
 
 ## Installation
 
@@ -19,27 +19,40 @@ Welcome to the LibraryProject! This project is a simple Django application desig
     ```bash
     cd LibraryProject
     ```
-3. Install the required dependencies:
+3. Create a virtual environment:
+    ```bash
+    python -m venv env
+    ```
+4. Activate the virtual environment:
+    - On Windows:
+        ```bash
+        .\env\Scripts\activate
+        ```
+    - On macOS and Linux:
+        ```bash
+        source env/bin/activate
+        ```
+5. Install the required dependencies:
     ```bash
     pip install -r requirements.txt
     ```
-4. Apply the migrations:
+6. Apply the migrations:
     ```bash
     python manage.py migrate
     ```
-5. Create a superuser:
+7. Create a superuser:
     ```bash
     python manage.py createsuperuser
     ```
-6. Run the development server:
+8. Run the development server:
     ```bash
     python manage.py runserver
     ```
 
 ## Usage
 
-- Access the admin panel at `http://127.0.0.1:8000/admin/` to manage the library.
-- Use the main application to search for books and manage borrowing.
+- Access the admin panel at `http://127.0.0.1:8000/admin` to manage books and members.
+- Use the main application to search for and borrow books.
 
 ## Contributing
 
@@ -48,3 +61,7 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any questions or suggestions, please contact [yourname@example.com](mailto:yourname@example.com).
