@@ -4,7 +4,7 @@ from .views import home, list_books, register, admin_view, librarian_view, membe
 
 
 urlpatterns = [
-    path("h", home, name="home"),
+    path("", home, name="home"),
     path("books/", list_books, name="list_books"),
     path("library/<int:pk>/", LibraryDetailView.as_view(), name="library_detail"),
     path("register/", register, name="register"),
