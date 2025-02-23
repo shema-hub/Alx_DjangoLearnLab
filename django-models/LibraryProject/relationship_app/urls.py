@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import list_books, LibraryDetailView, register
+from .views import list_books, LibraryDetailView, register, UserLoginView, UserLogoutView
 from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
