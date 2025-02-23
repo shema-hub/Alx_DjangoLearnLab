@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import list_books, LibraryDetailView, register, UserLoginView, UserLogoutView
+from .views import list_books, LibraryDetailView, register, UserLoginView, UserLogoutView
 
 urlpatterns = [
     path('books/', list_books, name='list_books'),  # URL for listing all books
