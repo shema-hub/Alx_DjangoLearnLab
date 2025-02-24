@@ -39,26 +39,30 @@ class Librarian(models.Model):
 
     def __str__(self):
         return self.name
-ROLE_CHOICES = [
-    ("Admin", "Admin"),
-    ("Librarian", "Librarian"),
-    ("Member", "Member"),
-]
 
 class UserProfile(models.Model):
-   
+    ROLE_CHOICES = [
+        ('ADMIN', 'Admin'),    # Admin role must be exactly as required
+        ('LIBRARIAN', 'Librarian'),
+        ('MEMBER', 'Member'),  # Member role must be exactly as required
+    ]
+    
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.CharField(max_length=50, choices=[('admin', 'Admin'), ('librarian', 'Librarian'), ('member', 'Member')])
+    role = models.CharField(
+        max_length=10,
+        choices=ROLE_CHOICES,
+        default='MEMBER'
+    )
 
     def __str__(self):
-            return self.user.username
+        return f"{self.user.username} - {self.role}"
 
+# Signals for automatic profile creation
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)  
+        UserProfile.objects.create(user=instance)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    user_profile, created = UserProfile.objects.get_or_create(user=instance)
-    user_profile.save()  
+    instance.userprofile.save()  
