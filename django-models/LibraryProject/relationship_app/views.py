@@ -1,59 +1,31 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout  
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
-from django.views.generic.detail import DetailView
-from django.contrib.auth.views import LoginView, LogoutView
-from .models import Library, Book  
-from django.shortcuts import render
-from django.contrib.auth.decorators import user_passes_test
-
-def home(request):
-    return redirect("relationship_app/list_books")
-
-def list_books(request):
-    books = Book.objects.all()
-    return render(request, "relationship_app/list_books.html", {"books": books})
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.views.generic import DetailView
+from .models import Book, Library
 
 def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  
-            return redirect("admin_view")  
+            login(request, user)
+            return redirect("home")  # Redirect to home after successful registration
     else:
         form = UserCreationForm()
-    
-    print("Form being sent to template:", form)  # Debugging step
-    return render(request, "relationship_app/register.html", {"form": form})
+    return render(request, "registration/register.html", {"form": form})
+
+def list_books(request):
+    """
+    Function-based view to list all books
+    """
+    books = Book.objects.all()
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
 class LibraryDetailView(DetailView):
+    """
+    Class-based view to show library details
+    """
     model = Library
-    template_name = "relationship_app/library_detail.html"
-    context_object_name = "library"
-
-class SignUpView(CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy("login")  # Redirect to login after signup
-    template_name = "registration/register.html"
-
-class UserLoginView(LoginView):
-    template_name = "registration/login.html"
-
-class UserLogoutView(LogoutView):
-    template_name = "registration/logout.html"
-
-def is_admin(user):
-    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
-
-@user_passes_test(is_admin)
-def admin_view(request):
-    return render(request, "relationship_app/admin_dashboard.html")
-
-def is_librarian(user):
-    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
-
-def is_member(user):
-    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
+    template_name = 'relationship_app/library_detail.html'
+    context_object_name = 'library'
