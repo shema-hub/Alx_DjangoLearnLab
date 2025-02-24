@@ -1,7 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.contrib.auth.models import User
 
 # Create your models here.
 class Author(models.Model):
@@ -11,16 +11,17 @@ class Author(models.Model):
         return self.name
     
 class Book(models.Model):
-    title = models.CharField(max_length=255)
-    author = models.CharField(max_length=255)
+    title = models.CharField(max_length=100)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     published_date = models.DateField(null=True, blank=True)
-    isbn = models.CharField(max_length=13, unique=True, blank=True, null=True, default=None)  # <- FIXED HERE
+    isbn = models.CharField(max_length=13, unique=True)
 
     class Meta:
         permissions = [
-            ("can_add_book", "Can add a book"),
-            ("can_change_book", "Can change a book"),
-            ("can_delete_book", "Can delete a book"),
+            ("can_add_book", "Can add book"),
+            ("can_change_book", "Can change book"),
+            ("can_delete_book", "Can delete book"),
         ]
 
     def __str__(self):
@@ -42,9 +43,9 @@ class Librarian(models.Model):
 
 class UserProfile(models.Model):
     ROLE_CHOICES = [
-        ('ADMIN', 'Admin'),    # Admin role must be exactly as required
+        ('ADMIN', 'Admin'),    # Admin role
         ('LIBRARIAN', 'Librarian'),
-        ('MEMBER', 'Member'),  # Member role must be exactly as required
+        ('MEMBER', 'Member'),  # Member role
     ]
     
     user = models.OneToOneField(User, on_delete=models.CASCADE)
