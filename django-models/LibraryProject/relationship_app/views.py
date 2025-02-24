@@ -13,7 +13,7 @@ def register(request):
             return redirect("home")  # Redirect to home after successful registration
     else:
         form = UserCreationForm()
-    return render(request, "registration/register.html", {"form": form})
+    return render(request, "relationship_app/register.html", {"form": form})
 
 def list_books(request):
     """
