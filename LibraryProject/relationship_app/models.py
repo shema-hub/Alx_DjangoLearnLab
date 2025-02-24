@@ -11,18 +11,17 @@ class Author(models.Model):
         return self.name
     
 class Book(models.Model):
-    title = models.CharField(max_length=255)
-    author = models.CharField(max_length=255)
-    published_date = models.DateField(null=True, blank=True)
-    isbn = models.CharField(max_length=13, unique=True, blank=True, null=True, default=None)  # <- FIXED HERE
-
+    title = models.CharField(max_length=100)
+    author = models.CharField(max_length=100)
+    publication_date = models.DateField()
+    isbn = models.CharField(max_length=13)
+    
     class Meta:
         permissions = [
-            ("can_add_book", "Can add a book"),
-            ("can_change_book", "Can change a book"),
-            ("can_delete_book", "Can delete a book"),
+            ("can_mark_returned", "Can mark returned"),
+            ("can_edit", "Can edit book details"),
         ]
-
+    
     def __str__(self):
         return self.title
 
