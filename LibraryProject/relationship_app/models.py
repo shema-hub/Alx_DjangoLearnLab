@@ -5,20 +5,22 @@ from django.dispatch import receiver
 
 class UserProfile(models.Model):
     ROLE_CHOICES = [
-        ('ADMIN', 'Admin'),
+        ('ADMIN', 'Admin'),    # Admin role
         ('LIBRARIAN', 'Librarian'), 
-        ('MEMBER', 'Member'),
+        ('MEMBER', 'Member'),  # Member role
     ]
     
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='MEMBER')
-
-    class Meta:
-        app_label = 'relationship_app'
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(
+        max_length=10,
+        choices=ROLE_CHOICES,
+        default='MEMBER'
+    )
 
     def __str__(self):
         return f"{self.user.username} - {self.role}"
 
+# Signal to create UserProfile automatically
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -26,4 +28,4 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save() 
+    instance.userprofile.save() 
