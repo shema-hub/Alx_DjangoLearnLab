@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import permission_required
 from .models import Book
 from .forms import BookForm
 
+
 def home(request):
     return redirect("list_books") 
 
