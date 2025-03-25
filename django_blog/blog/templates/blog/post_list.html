@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <h2>All Posts</h2>
+
+    {% if tag %}
+        <h2>Posts tagged with "{{ tag.name }}"</h2>
+    {% endif %}
+
+    <ul>
+        {% for post in posts %}
+            <li>
+                <h3><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
+                <p>{{ post.content|truncatewords:20 }}</p>
+            </li>
+        {% empty %}
+            <p>No posts found.</p>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'post-create' %}">Create New Post</a>
+{% endblock %}

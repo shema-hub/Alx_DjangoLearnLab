@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<h2>Comments</h2>
+<ul>
+    {% for comment in comments %}
+        <li>
+            <strong>{{ comment.author }}</strong> - {{ comment.created_at }}<br>
+            {{ comment.content }}
+        </li>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'comment-create' post.id%}">Add a Comment</a>
+{% endblock %}

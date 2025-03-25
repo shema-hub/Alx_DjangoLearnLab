@@ -1,0 +1,21 @@
+<!-- templates/blog/profile.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Profile</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" value="{{ user.username }}">
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" value="{{ user.email }}">
+        <br>
+        <button type="submit">Update Profile</button>
+    </form>
+    <p><a href="{% url 'logout' %}">Logout</a></p>
+</body>
+</html>
