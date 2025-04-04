@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<h2>{% if comment %}Edit{% else %}Add{% endif %} Comment</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+    {% if post %}
+        <a href="{% url 'comment-list' post.id %}">Cancel</a>
+    {% else %}
+        <a href="{% url 'post-list' %}">Cancel</a>  {# Fallback if post is missing #}
+    {% endif %}
+    
+{% endblock %}
