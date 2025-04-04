@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, AbstractUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, AbstractUser, BaseUserManager, PermissionsMixin
 from django.conf import settings
 
 # Custom user model manager where email is the unique identifier
@@ -26,7 +26,7 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 # CustomUser model
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+class CustomUser(AbstractUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     bio = models.TextField(blank=True)
     profile_picture = models.ImageField(upload_to="profile_pictures/", null=True, blank=True)
